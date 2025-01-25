@@ -1,0 +1,77 @@
+@Library('pritam-shared') _
+
+pipeline {
+    agent any
+
+    parameters {
+        string(
+            name: 'REPO_URL', 
+            defaultValue: 'https://github.com/MyGurukulam-p11/sprint05-terraform-code.git', 
+            description: 'Repository URL to clone'
+        )
+        string(
+            name: 'WORKSPACE_DIR', 
+            defaultValue: '/var/lib/jenkins/workspace/ENV/DEV/CD/network-skeleton/env/dev/network_skeleton', 
+            description: 'Workspace directory for Terraform'
+        )
+        choice(
+            name: 'ACTION', 
+            choices: ['apply', 'destroy'], 
+            description: 'Choose whether to apply or destroy the Terraform infrastructure'
+        )
+    }
+
+    stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs() 
+            }
+        }
+
+        stage('Clone Repository') {
+            steps {
+                script {
+                    cloneRepo(params.REPO_URL, branch: 'mohit_scrum_219', credentialsId: 'Devops-repo-cred')
+                }
+            }
+        }
+
+        stage('Terraform Init') {
+            steps {
+                script {
+                    init(this, params.WORKSPACE_DIR) 
+                }
+            }
+        }
+
+        stage('Terraform Validate') {
+            steps {
+                script {
+                    validate(this, params.WORKSPACE_DIR) 
+                }
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                script {
+                    plan(this, params.WORKSPACE_DIR) 
+                }
+            }
+        }
+
+        stage('Terraform Action') {
+            steps {
+                script {
+                    if (params.ACTION == 'apply') {
+                        input message: 'Approve Terraform Apply?', ok: 'Apply'
+                        apply(this, params.WORKSPACE_DIR, true) 
+                    } else if (params.ACTION == 'destroy') {
+                        input message: 'Approve Terraform Destroy?', ok: 'Destroy'
+                        destroy(this, params.WORKSPACE_DIR, true) 
+                    }
+                }
+            }
+        }
+    }
+}
