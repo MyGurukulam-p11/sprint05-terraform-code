@@ -1,5 +1,5 @@
 module "attendance_application" {
-  source = "git::git@github.com:MyGurukulam-p11/sprint05-terraform-code.git//module/network-skeleton?ref=anjali_scrum_207"
+  source = "git::git@github.com:MyGurukulam-p11/sprint05-terraform-code.git//module/asg?ref=pritam_scrum_208"
   tcp_protocol = var.tcp_protocol
   application_port = var.application_port
   environment = var.environment
