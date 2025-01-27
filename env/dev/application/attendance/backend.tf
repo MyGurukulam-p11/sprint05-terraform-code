@@ -1,8 +1,8 @@
 terraform {
   backend "s3" {
-    bucket  = "mysnaatak-p11-statefile-test1"
+    bucket  = "combine-force-p11-statefile"
     key     = "env/dev/application/attendance/terraform.tfstate"
-    region  = "us-east-1"
+    region  = "ap-south-1"
     encrypt = true
   }
 }
