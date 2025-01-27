@@ -2,14 +2,14 @@ data "terraform_remote_state" "salary_state" {
   backend = "s3"
 
   config = {
-    bucket = "mysnaatak-p11-statefile-test1"
+    bucket = "combine-force-p11-statefile"
     key    = "env/dev/application/salary/terraform.tfstate"
-    region = "us-east-1"
+    region = "ap-south-1"
   }
 }
 
 module "scylla_db" {
-  source = "./standalone"
+  source = "git::git@github.com:MyGurukulam-p11/sprint05-terraform-code.git//module/standalone_VM?ref=mohit_scrum_209"
   listener_rule_priority = var.listener_rule_priority
   path_patterns = var.path_patterns
   target_group_arn = data.terraform_remote_state.salary_state.outputs.salary_target_group_arn
