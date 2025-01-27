@@ -52,8 +52,6 @@ resource "aws_route53_zone" "private_zone" {
   vpc {
     vpc_id = data.terraform_remote_state.network_skeleton_state.outputs.vpc_id
   }
-  comment       = "Private hosted zone for db.com"
-  hosted_zone_type = "private"
 }
 
 
