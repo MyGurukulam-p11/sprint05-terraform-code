@@ -2,9 +2,9 @@ data "terraform_remote_state" "employee_state" {
   backend = "s3"
 
   config = {
-    bucket = "mysnaatak-p11-statefile-test1"
+    bucket = "combine-force-p11-statefile"
     key    = "env/dev/application/employee/terraform.tfstate"
-    region = "us-east-1"
+    region = "ap-south-1"
   }
 }
 
