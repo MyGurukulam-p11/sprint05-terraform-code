@@ -61,3 +61,4 @@ resource "aws_route53_record" "a_record" {
   type    = "A"
   ttl     = 300
   records = [module.postgresSQL.db_server_ip_address] 
+}
