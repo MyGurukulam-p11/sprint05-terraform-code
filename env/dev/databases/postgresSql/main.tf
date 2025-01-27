@@ -60,5 +60,4 @@ resource "aws_route53_record" "a_record" {
   name    = "db.com"         # Fully qualified domain name
   type    = "A"
   ttl     = 300
-  records = [module.postgresSQL.db_server_id] # Wrap the string in a list
-}
+  records = [module.postgresSQL.db_server_ip_address] 
