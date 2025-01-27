@@ -1,5 +1,5 @@
 module "attendance_application" {
-  source = "/home/pritam/frontend-wrapper-test/auto_scaling_group"
+  source = "git::git@github.com:MyGurukulam-p11/sprint05-terraform-code.git//module/network-skeleton?ref=anjali_scrum_207"
   tcp_protocol = var.tcp_protocol
   application_port = var.application_port
   environment = var.environment
