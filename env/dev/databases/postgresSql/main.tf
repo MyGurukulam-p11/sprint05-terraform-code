@@ -8,6 +8,16 @@ data "terraform_remote_state" "postgresSQL_state" {
   }
 }
 
+data "terraform_remote_state" "network_skeleton_state" {
+  backend = "s3"
+
+  config = {
+    bucket = "combine-force-p11-statefile"
+    key    = "env/dev/network_skeleton/module/terraform.tfstate"
+    region = "ap-south-1"
+  }
+}
+
 module "postgresSQL" {
   source = "git::git@github.com:MyGurukulam-p11/sprint05-terraform-code.git//module/standalone_VM?ref=mohit_scrum_209"
   listener_rule_priority = var.listener_rule_priority
@@ -33,4 +43,24 @@ module "postgresSQL" {
   enable_employee_access_for_redis = var.enable_employee_access_for_redis
   enable_salary_access_for_redis = var.enable_salary_access_for_redis
   redis_port = var.redis_port
+}
+
+
+# Private Hosted Zone
+resource "aws_route53_zone" "private_zone" {
+  name          = "db.com"
+  vpc {
+    vpc_id = data.terraform_remote_state.network_skeleton_state.outputs.vpc_id
+  }
+  comment       = "Private hosted zone for db.com"
+  hosted_zone_type = "private"
+}
+
+
+resource "aws_route53_record" "a_record" {
+  zone_id = aws_route53_zone.private_zone.id
+  name    = "db.com"         # Fully qualified domain name
+  type    = "A"
+  ttl     = 300
+  records = module.postgresSQL.output.db_server_id
 }
