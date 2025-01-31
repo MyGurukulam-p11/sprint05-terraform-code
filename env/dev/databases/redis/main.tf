@@ -1,5 +1,5 @@
 module "asg" {
-  source = "./asg"
+  source = "git::git@github.com:MyGurukulam-p11/sprint05-terraform-code.git//module/standalone_VM?ref=mohit_scrum_209"
   tcp_protocol = var.tcp_protocol
   application_port = var.application_port
   environment = var.environment
