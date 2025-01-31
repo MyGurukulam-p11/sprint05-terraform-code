@@ -1,5 +1,5 @@
 module "asg" {
-  source = "./asg"
+  source = "https://github.com/MyGurukulam-p11/sprint05-terraform-code/blob/amit_scrum_220/env/dev/application/frontend/main.tf"
   tcp_protocol = var.tcp_protocol
   application_port = var.application_port
   environment = var.environment
