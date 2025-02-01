@@ -50,3 +50,11 @@ data "terraform_remote_state" "asg_state" {
     region = "ap-south-1"
   }
 }
+
+
+data "aws_security_group" "jenkins_sg_id" {
+  filter {
+    name   = "tag:Name"         
+    values = ["Jenkins-sg"]         
+  }
+}
