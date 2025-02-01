@@ -89,6 +89,14 @@ resource "aws_security_group" "security_group" {
     }
   }
 
+   ingress {
+    from_port   = var.ssh_port
+    to_port     = var.ssh_port
+    protocol    = var.tcp_protocol
+    security_groups = [data.aws_security_group.jenkins_sg_id.id] 
+    description      = "Allow SSH from management Jenkins"
+  }
+
   egress  {
     from_port   = 0
     to_port     = 0
