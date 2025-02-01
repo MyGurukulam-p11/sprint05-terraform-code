@@ -23,3 +23,8 @@ data "aws_route_table" "manage-Private-RT" {
     values = ["management-Private-RT"]         
   }
 }
+
+
+data "aws_route53_zone" "public-zone" {
+  name = "teckwithpratham.click"
+}
