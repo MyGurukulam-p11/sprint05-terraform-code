@@ -306,15 +306,19 @@ resource "aws_route53_zone" "dev_route53" {
   }      
 }
 
-################################################
-# route53 records
-################################################
 
-resource "aws_route53_record" "cname_record" {
-  zone_id = aws_route53_zone.dev_route53.zone_id
+###################################
+## route 53
+###################################
+
+resource "aws_route53_record" "A_record" {
+  zone_id = data.aws_route53_zone.public-zone.zone_id
   name    = var.subdomain_name
-  type    = var.record_type
-  ttl     = var.ttl_value
-  records = [aws_lb.dev_alb.dns_name]
-}
+  type    = "A"
 
+  alias {
+    name                   = aws_lb.dev_alb.dns_name
+    zone_id                = aws_lb.dev_alb.zone_id
+    evaluate_target_health = true
+  }
+}
