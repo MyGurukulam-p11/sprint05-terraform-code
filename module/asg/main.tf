@@ -32,7 +32,7 @@ resource "aws_security_group" "security_groups" {
 #############################################
 
 resource "aws_launch_template" "launch_template" {
-  name = var.launch_template_name
+  name = local.launch_template_name
   image_id      = var.ami_id 
   instance_type = var.instance_type             
   key_name      = var.key_name
@@ -53,7 +53,7 @@ resource "aws_launch_template" "launch_template" {
 # target group
 
 resource "aws_lb_target_group" "tg" {
-  name      = var.tg_name
+  name      = local.tg_name
   port     = var.application_port
   protocol = var.http_protocol
   vpc_id   = data.terraform_remote_state.network_skeleton_state.outputs.vpc_id
@@ -78,7 +78,9 @@ resource "aws_lb_listener" "http_listener" {
   count             = var.enable_http_listener ? 1 : 0
   load_balancer_arn = data.terraform_remote_state.network_skeleton_state.outputs.alb_arn
   port              = var.http_listener_port
-  protocol          = var.http_protocol
+  protocol          = var.https_protocol
+  ssl_policy        = "ELBSecurityPolicy-2016-08"
+  certificate_arn   = "arn:aws:acm:ap-south-1:872515268050:certificate/a2874c05-7f24-41fa-a55d-1a0f4d1f44a3"
 
   default_action {
     type             = "forward"
@@ -91,7 +93,7 @@ resource "aws_lb_listener" "http_listener" {
 ########################################################
 
 resource "aws_autoscaling_group" "asg" {
-  name                = var.asg_name
+  name                = local.asg_name
   launch_template {
     id      = aws_launch_template.launch_template.id
     version = "$Latest"
@@ -107,7 +109,7 @@ resource "aws_autoscaling_group" "asg" {
   target_group_arns = [aws_lb_target_group.tg.arn]
   tag {
     key                 = "Name"
-    value               = var.instance_name
+    value               = local.instance_name
     propagate_at_launch = true
   }
 }
