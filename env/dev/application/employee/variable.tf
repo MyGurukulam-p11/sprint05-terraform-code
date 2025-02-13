@@ -31,29 +31,25 @@ variable "application_name" {
 variable "ami_id" {
   type        = string
   description = "application ami id"
-  default = "ami-0cf502a52155cef85"
+  default = "ami-04b4f1a9cf54c11d0"
 }
 
 variable "instance_type" {
   description = "The instance type for the launch template. Allowed values are t2.medium and t2.large."
   type        = string
-  default = "t2.micro"
+  default = "t2.medium"
 
   validation {
-    condition     = contains(["t2.mcro", "t2.large"], var.instance_type)
+    condition     = contains(["t2.micro", "t2.large"], var.instance_type)
     error_message = "Invalid instance type. Allowed values are t2.medium or t2.large."
   }
 }
 
 variable "key_name" {
   type        = string
-  default = "OTMS-key"
+  default = "otms"
 }
 
-variable "launch_template_name" {
-  type = string
-  default = "frontend-launch-template"
-}
 
 ##########################################
 # Target group variable
@@ -90,10 +86,8 @@ variable "unhealthy_threshold" {
   default = "2"
 }
 
-variable "tg_name" {
-  type = string
-  default = "frontend-tg"
-}
+
+
 ###############################################
 # default listener variable
 ###############################################
@@ -111,6 +105,12 @@ variable "enable_http_listener" {
   default     = true
 }
 
+variable "https_protocol" {
+  type = string
+  default = "HTTPS"
+  
+}
+
 ###############################################
 # Auto Scaling Group
 ########################################################
@@ -118,12 +118,7 @@ variable "enable_http_listener" {
 # asg variable
 
 
-variable "asg_name" {
-  type = string
-  description = "application asg name"
-  default = "module-asg"
-  
-}
+
 
 variable "desired_capacity" {
   type = string
@@ -143,11 +138,7 @@ variable "min_size" {
   default = "2"
 }
 
-variable "instance_name" {
-  type = string
-  description = "instance name"
-  default = "module-sg"
-}
+
 
 variable "is_frontend" {
   type = bool
@@ -193,4 +184,3 @@ variable "adjustment_type" {
   type = string
   default = "ChangeInCapacity"
 }
-
