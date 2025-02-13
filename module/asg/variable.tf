@@ -40,7 +40,7 @@ variable "instance_type" {
   default = "t2.medium"
 
   validation {
-    condition     = contains(["t2.medium", "t2.large"], var.instance_type)
+    condition     = contains(["t2.micro", "t2.large"], var.instance_type)
     error_message = "Invalid instance type. Allowed values are t2.medium or t2.large."
   }
 }
@@ -50,10 +50,7 @@ variable "key_name" {
   default = "otms"
 }
 
-variable "launch_template_name" {
-  type = string
-  default = "frontend-launch-template"
-}
+
 ##########################################
 # Target group variable
 ##########################################
@@ -89,10 +86,7 @@ variable "unhealthy_threshold" {
   default = "2"
 }
 
-variable "tg_name" {
-  type = string
-  default = "frontend-tg"
-}
+
 
 ###############################################
 # default listener variable
@@ -111,6 +105,11 @@ variable "enable_http_listener" {
   default     = true
 }
 
+variable "https_protocol" {
+  type = string
+  default = "HTTPS"
+  
+}
 
 ###############################################
 # Auto Scaling Group
@@ -119,12 +118,7 @@ variable "enable_http_listener" {
 # asg variable
 
 
-variable "asg_name" {
-  type = string
-  description = "application asg name"
-  default = "module-asg"
-  
-}
+
 
 variable "desired_capacity" {
   type = string
@@ -144,11 +138,7 @@ variable "min_size" {
   default = "2"
 }
 
-variable "instance_name" {
-  type = string
-  description = "instance name"
-  default = "module-sg"
-}
+
 
 variable "is_frontend" {
   type = bool
