@@ -1,0 +1,40 @@
+@Library('terraform_CD') _
+
+pipeline {
+    agent any
+    
+    parameters {
+        string(name: 'URL', defaultValue: 'git@github.com:MyGurukulam-p11/sprint05-terraform-code.git', description: 'Git Repository URL')
+        string(name: 'BRANCH', defaultValue: 'priyanshu_scrum_223', description: 'Branch to build')
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    checkout([$class: 'GitSCM', 
+                        branches: [[name: "${params.BRANCH}"]],
+                        userRemoteConfigs: [[
+                            url: "${params.URL}",
+                            credentialsId: 'amit-creds'
+                        ]]
+                    ])
+                }
+            }
+        }
+    
+        stage('terraform CD') {
+            steps {
+                script {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'priyanshu-snaatak']]) {
+                        def terraformCD = new org.p11combinedforce.template.terraformCD.terraformCD()
+                        terraformCD.call(params.URL, 
+                                       params.BRANCH, 
+                                       'amit-creds', 
+                                       'env/dev/application/attendance')
+                    }
+                }
+            }
+        }
+    }
+}
