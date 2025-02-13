@@ -55,6 +55,6 @@ data "terraform_remote_state" "asg_state" {
 data "aws_security_group" "jenkins_sg_id" {
   filter {
     name   = "tag:Name"         
-    values = ["Jenkins-sg"]         
+    values = ["Jekins-sg"]         
   }
 }
