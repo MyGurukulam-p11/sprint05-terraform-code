@@ -40,7 +40,7 @@ variable "instance_type" {
   default = "t2.medium"
 
   validation {
-    condition     = contains(["t2.micro", "t2.large"], var.instance_type)
+    condition     = contains(["t2.micro", "t2.medium"], var.instance_type)
     error_message = "Invalid instance type. Allowed values are t2.medium or t2.large."
   }
 }
