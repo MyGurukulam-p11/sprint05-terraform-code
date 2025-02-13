@@ -15,18 +15,15 @@ module "asg" {
   unhealthy_threshold = var.unhealthy_threshold
   http_listener_port = var.http_listener_port
   enable_http_listener = var.enable_http_listener
-  asg_name = var.asg_name
+  https_protocol = var.https_protocol
   desired_capacity = var.desired_capacity
   max_size = var.max_size
   min_size = var.min_size
-  instance_name = var.instance_name
   estimated_instance_warmup = var.estimated_instance_warmup
   policy_name = var.policy_name
   policy_type = var.policy_type
   metric_type = var.metric_type
   target_value = var.target_value
   adjustment_type = var.adjustment_type
-  launch_template_name = var.launch_template_name
-  tg_name = var.tg_name  
   is_frontend = var.is_frontend
 }
