@@ -1,7 +1,7 @@
 data "terraform_remote_state" "salary_state" {
   backend = "s3"
   config = {
-    bucket = "otms-p11-dev-terraform-statefile"
+    bucket = "my-gurukulam-p11-statefile"
     key    = "env/dev/application/salary/terraform.tfstate"
     region = "ap-south-1"
   }
