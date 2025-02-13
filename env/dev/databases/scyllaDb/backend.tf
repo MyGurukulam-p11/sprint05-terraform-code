@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket  = "otms-p11-dev-terraform-statefile"
+    bucket  = "my-gurukulam-p11-statefile"
     key     = "env/dev/databases/scyllaDb/terraform.tfstate"
     region  = "ap-south-1"
     encrypt = true
