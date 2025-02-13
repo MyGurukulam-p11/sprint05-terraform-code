@@ -1,4 +1,4 @@
-module "employee_application" {
+module "salary_application" {
   source = "git::git@github.com:MyGurukulam-p11/sprint05-terraform-code.git//module/asg?ref=pritam_scrum_208"
   tcp_protocol = var.tcp_protocol
   application_port = var.application_port
@@ -13,7 +13,7 @@ module "employee_application" {
   health_check_path = var.health_check_path
   timeout = var.timeout
   healthy_threshold = var.healthy_threshold
-  unhealthy_threshold = var.unhealthy_threshold
+  unhealthy_threshold = var.unhealthy_threshold 
   http_listener_port = var.http_listener_port
   enable_http_listener = var.enable_http_listener
   https_protocol = var.https_protocol
