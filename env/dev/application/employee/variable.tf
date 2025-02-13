@@ -31,23 +31,23 @@ variable "application_name" {
 variable "ami_id" {
   type        = string
   description = "application ami id"
-  default = "ami-04b4f1a9cf54c11d0"
+  default = "ami-0cf502a52155cef85"
 }
 
 variable "instance_type" {
   description = "The instance type for the launch template. Allowed values are t2.medium and t2.large."
   type        = string
-  default = "t2.medium"
+  default = "t2.micro"
 
   validation {
-    condition     = contains(["t2.medium", "t2.large"], var.instance_type)
+    condition     = contains(["t2.mcro", "t2.large"], var.instance_type)
     error_message = "Invalid instance type. Allowed values are t2.medium or t2.large."
   }
 }
 
 variable "key_name" {
   type        = string
-  default = "otms"
+  default = "OTMS-key"
 }
 
 variable "launch_template_name" {
