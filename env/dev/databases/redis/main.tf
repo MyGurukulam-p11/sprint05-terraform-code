@@ -9,7 +9,7 @@ data "terraform_remote_state" "employee_state" {
 }
 
 module "redis" {
-  source = "git::git@github.com:MyGurukulam-p11/sprint05-terraform-code.git//module/standalone_VM?ref=mohit_scrum_209"
+  source = "git::git@github.com:MyGurukulam-p11/prod-infrastructure.git//module/standalone_VM?ref=mohit_scrum_209"
   listener_rule_priority = var.listener_rule_priority
   path_patterns = var.path_patterns
   target_group_arn = data.terraform_remote_state.employee_state.outputs.employee_target_group_arn
